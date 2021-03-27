@@ -1,9 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtraPlugin = require('mini-css-extract-plugin');
-const CssMiniMizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtraPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     entry: "./src/index.js",
@@ -13,12 +10,8 @@ module.exports = {
     },
     resolve: {
         extensions: [".js", ".jsx"],
-        alias: {
-            '@components': path.resolve(__dirname, './src/components/'),
-            '@styles': path.resolve(__dirname, './src/styles/'),
-        },
     },
-    mode: 'production',
+    mode: 'development',
     module: {
         rules: [
             {
@@ -54,13 +47,10 @@ module.exports = {
         new MiniCssExtraPlugin({
             filename: '[name].css'
         }),
-        new CleanWebpackPlugin(),
     ],
-    optimization: {
-        miniize: true,
-        minimizer: [
-            new CssMiniMizerPlugin(),
-            new TerserPlugin(),
-        ],
-    },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 3006
+    }
 };
